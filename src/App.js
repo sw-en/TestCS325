@@ -1,4 +1,7 @@
+import React, { useState } from 'react';
 
+import Images from './components/Images.js';
+import Button from './components/Button.js';
 import './App.css';
 
 import p00028 from './images/PIA00028_small.jpg';
@@ -124,25 +127,39 @@ function App() {
     return result;
   } // monthName()
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+/*
   const index =
-    Math.trunc(Math.random() * catalog.length);
+    Math.trunc(Math.random() * catalog.length);*/
+
+
+  const handleNextClick = () => {
+    setCurrentIndex((currentIndex + 1) % catalog.length);
+  };
+
+  const handlePrevClick = () => {
+    setCurrentIndex((currentIndex - 1 + catalog.length) % catalog.length);
+  };
 
   return (
     <div className="App">
-      <h1>{catalog[index].title}</h1>
-      <img src={catalog[index].image}
+      <h1>{catalog[currentIndex].title}</h1>
+      <Images image={catalog[currentIndex].image}
         alt="small world"
         width="256"
-      />
+      /> 
       <p>
-        {catalog[index].description}
+        {catalog[currentIndex].description}
       </p>
       <hr/>
       <p>
-        {monthName(catalog[index].month) + ' '
-        + catalog[index].day + ', '
-        + catalog[index].year}
+        {monthName(catalog[currentIndex].month) + ' '
+        + catalog[currentIndex].day + ', '
+        + catalog[currentIndex].year}
       </p>
+      <Button onClick={handleNextClick}> Next </Button>
+      <Button onClick={handlePrevClick}> Previous </Button>
     </div>
   );
 }
